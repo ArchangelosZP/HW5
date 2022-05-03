@@ -1,36 +1,34 @@
 import javax.script.ScriptException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Calc {
-    static String originalSentence;
+public class Calc extends ElectricalAappliance {
     static Scanner scanner = new Scanner(System.in);
 
-
-
     // Again, I wrote the code incorrectly - I wrote it as I would do if it were a real task. Now all the same, he began to plan a relocation abroad. Not enough time to do quality homework.
-    public void calcM() throws ScriptException {
-        System.out.println("Введите выражение которое надо вычислить или же введите exit для выхода");
+    public void calcM() {
+        System.out.println("Введите выражение которое надо вычислить или же введите exit для перехода к второму заданию");
         String text = scanner.nextLine();
-        switch (text) {
-            case "exit":
-                return;
+        if ("exit".equals(text)) {
+            return;
         }
         Expressions object = new Expressions();
         try {
             System.out.println(object.make(text));
-        } catch (IndexOutOfBoundsException e) {
-            calcM();
-        } catch (NoSuchElementException e) {
-            calcM();
-        } catch (NumberFormatException e) {
+        } catch (IndexOutOfBoundsException | NoSuchElementException | NumberFormatException e) {
             calcM();
         }
         calcM();
     }
 
-    public class Expressions {
+    @Override // we will assume that the calculator is charging faster than other devices
+    public void addCharge(){
+        this.chargeLevel = this.chargeLevel+5;
+    }
+
+    private class Expressions {
 
 
         public boolean isOperation(char c) {
